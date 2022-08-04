@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--MyBatis配置文件-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xuge.mszl.mapper.TagMapper">
+ <select id="queryTagsById" parameterType="long" resultType="com.xuge.mszl.bean.Tag">
+     select  id,avatar,tag_name as tagName from ms_tag
+     where id in
+     (select tag_id  from ms_article_tag  where article_id=#{id})
+ </select>
+    <select id="queryHotTags" parameterType="int" resultType="Long">
+        select  tag_id from  ms_article_tag
+     group  by tag_id  order by count(*)  desc  limit #{i}
+    </select>
+
+</mapper>
